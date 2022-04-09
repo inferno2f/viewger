@@ -1,14 +1,11 @@
-FROM python:3.9-alpine
+FROM python:3.10-slim
 
-RUN mkdir /app
 WORKDIR /app
 
-ADD requirements.txt /app
-RUN pip3 install -r requirements.txt
-
-ADD . /app
-
-RUN chmod +x gunicorn.sh
+COPY . .
+RUN apt update && apt install -y gcc libpq-dev && \
+    pip3 install -r /app/requirements.txt --no-cache-dir && \
+    chmod +x gunicorn.sh
 
 EXPOSE 5000
 

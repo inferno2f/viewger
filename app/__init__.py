@@ -1,1 +1,1 @@
-from app.views import viewgerapp
+# from app.views import viewgerapp

@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 
-
 """
 Creates basic one-page Flask app
 """

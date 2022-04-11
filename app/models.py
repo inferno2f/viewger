@@ -1,5 +1,6 @@
-from views import db
 from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.sql import expression
+from views import db
 
 
 class User(db.Model):
@@ -7,9 +8,9 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
-    email = db.Column(db.String(128))
+    email = db.Column(db.String(128), unique=True)
     grade = db.Column(db.String(24))
-    is_admin = db.Column(db.Boolean, default=False, nullable=False)
+    is_admin = db.Column(db.Boolean, server_default=expression.false(), nullable=False)
     result_all = db.Column(JSON)
     result_no_stop_words = db.Column(JSON)
 

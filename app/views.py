@@ -1,19 +1,10 @@
-import os
-
-from dotenv import load_dotenv
-from flask import Flask, render_template
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.sql import expression
 
-load_dotenv()
+from app import create_app, db
 
-viewgerapp = Flask(__name__)
-viewgerapp.config.from_object(os.environ['APP_SETTINGS'])
-viewgerapp.config['SQLALCHEMY_DATABASE_URI'] = (os.environ['DATABASE_URL'])
-db = SQLAlchemy(viewgerapp)
-migrate = Migrate(viewgerapp, db)
+app = create_app()
 
 
 # TODO: перенести модели в отдельный файл так, чтобы создавались миграции
@@ -38,10 +29,10 @@ class User(db.Model):
         return f'{self.username} - id: {self.id}'
 
 
-@viewgerapp.route("/")
+@app.route("/")
 def index():
     return render_template("index.html")
 
 
 if __name__ == "__main__":
-    viewgerapp.run()
+    app.run()

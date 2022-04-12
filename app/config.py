@@ -1,16 +1,18 @@
 import os
-from os import path
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-basedir = path.abspath(path.dirname(__file__))
-load_dotenv(path.join(basedir, '.env'))
+basedir = Path(__file__).resolve().parent.parent
+load_dotenv(basedir.joinpath('.env'))
 
 
 class Config:
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SECRET_KEY = 'dev'  # should be changed for production version
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}" \
+                              f"@{os.environ['DB_IP']}/{os.environ['DB_NAME']}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

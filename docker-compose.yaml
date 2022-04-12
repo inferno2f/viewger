@@ -1,0 +1,25 @@
+volumes:
+  postgres_data:
+
+services:
+  db:
+    container_name: viewger_postgres
+    image: postgres:latest
+    ports:
+      - 35432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+  app:
+    container_name: viewger_app
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 8888:8888
+    environment:
+      DATABASE_URL: ${DATABASE_URL}

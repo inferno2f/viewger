@@ -9,7 +9,7 @@ services:
     image: postgres:latest
     restart: always
     ports:
-      - "35432:5432"
+      - ${DB_EXTERNAL_PORT}:${DB_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -23,9 +23,10 @@ services:
     depends_on:
       - db
     ports:
-      - "8888:8888"
+      - ${APP_EXTERNAL_PORT}:${APP_PORT}
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-      POSTGRES_IP: ${DB_IP}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}

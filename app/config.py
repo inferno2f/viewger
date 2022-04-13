@@ -12,7 +12,7 @@ class Config:
     TESTING = False
     SECRET_KEY = 'dev'  # should be changed for production version
     SQLALCHEMY_DATABASE_URI = f"postgresql://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}" \
-                              f"@{os.environ['DB_IP']}/{os.environ['DB_NAME']}"
+                              f"@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

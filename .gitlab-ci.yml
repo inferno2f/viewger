@@ -16,7 +16,7 @@ test-job:   # This job runs in the test stage.
     - pip3 install -r requirements.txt
   script:
     - echo "Running tests..."
-    - pytest
+    - python3 -m pytest tests/
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.

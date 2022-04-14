@@ -1,3 +1,6 @@
-from app.views import viewgerapp
+from app import create_app
 
-viewgerapp.config['DEBUG'] = False
+app = create_app()
+
+if __name__ == "__main__":
+    app.run()

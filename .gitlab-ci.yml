@@ -1,3 +1,5 @@
+image: python:latest
+
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
@@ -13,7 +15,7 @@ test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   before_script:
     - echo "Installing requirements..."  
-    - pip3 install -r requirements.txt
+    - pip install -r requirements.txt
   script:
     - echo "Running tests..."
     - python3 -m pytest tests/

@@ -20,6 +20,9 @@ def create_app():
     from .db import db
     db.init_app(app)
 
+    from app import views
+    app.register_blueprint(views.bp)
+
     migrate.init_app(app, db)
 
     return app

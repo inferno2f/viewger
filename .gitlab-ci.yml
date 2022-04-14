@@ -1,0 +1,15 @@
+image: python:latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - test
+
+test-job:   # This job runs in the test stage.
+  stage: test
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev" || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "dev" || $CI_COMMIT_BRANCH == "dev"
+  before_script:
+    - echo "Installing requirements..."  
+    - pip install -r requirements.txt
+  script:
+    - echo "Running tests..."
+    - python3 -m pytest tests/

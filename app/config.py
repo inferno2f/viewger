@@ -11,9 +11,13 @@ class Config:
     DEBUG = False
     TESTING = False
     SECRET_KEY = "dev"  # should be changed for production version
+    DB_USER = os.environ.get("DB_USER", "user")
+    DB_PASS = os.environ.get("DB_PASSWORD", "password")
+    DB_HOST = os.environ.get("DB_HOST", "localhost")
+    DB_PORT = os.environ.get("DB_PORT", 5432)
+    DB_NAME = os.environ.get("DB_NAME", "viewgerdb")
     SQLALCHEMY_DATABASE_URI = (
-        f"postgresql://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}"
-        f"@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}"
+        f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

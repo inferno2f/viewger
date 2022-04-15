@@ -1,10 +1,11 @@
 import os
-
 from pathlib import Path
 
-from flask_migrate import Migrate
-from flask import Flask
 from dotenv import load_dotenv
+from flask import Flask
+from flask_migrate import Migrate
+
+from app.blueprints import admin, api, main
 
 basedir = Path(__file__).resolve().parent.parent
 load_dotenv(basedir.joinpath(".env"))
@@ -21,17 +22,9 @@ def create_app():
 
     db.init_app(app)
 
-    from .blueprints.main import main as main_blueprint
-
-    app.register_blueprint(main_blueprint, url_prefix="/")
-
-    from .blueprints.api import api as api_blueprint
-
-    app.register_blueprint(api_blueprint, url_prefix="/api/")
-
-    from .blueprints.admin import admin as admin_blueprint
-
-    app.register_blueprint(admin_blueprint, url_prefix="/admin/")
+    app.register_blueprint(admin.views.blueprint, url_prefix="/admin/")
+    app.register_blueprint(api.views.blueprint, url_prefix="/api/")
+    app.register_blueprint(main.views.blueprint, url_prefix="/")
 
     migrate.init_app(app, db)
 

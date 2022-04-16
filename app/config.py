@@ -4,15 +4,21 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 basedir = Path(__file__).resolve().parent.parent
-load_dotenv(basedir.joinpath('.env'))
+load_dotenv(basedir.joinpath(".env"))
 
 
 class Config:
     DEBUG = False
     TESTING = False
-    SECRET_KEY = 'dev'  # should be changed for production version
-    SQLALCHEMY_DATABASE_URI = f"postgresql://{os.environ['DB_USER']}:{os.environ['DB_PASSWORD']}" \
-                              f"@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}"
+    SECRET_KEY = "dev"  # should be changed for production version
+    DB_USER = os.environ.get("DB_USER", "user")
+    DB_PASS = os.environ.get("DB_PASS", "password")
+    DB_HOST = os.environ.get("DB_HOST", "localhost")
+    DB_PORT = os.environ.get("DB_PORT", 5432)
+    DB_NAME = os.environ.get("DB_NAME", "viewgerdb")
+    SQLALCHEMY_DATABASE_URI = (
+        f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 

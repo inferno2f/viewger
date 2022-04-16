@@ -12,7 +12,7 @@ class Config:
     TESTING = False
     SECRET_KEY = "dev"  # should be changed for production version
     DB_USER = os.environ.get("DB_USER", "user")
-    DB_PASS = os.environ.get("DB_PASSWORD", "password")
+    DB_PASS = os.environ.get("DB_PASS", "password")
     DB_HOST = os.environ.get("DB_HOST", "localhost")
     DB_PORT = os.environ.get("DB_PORT", 5432)
     DB_NAME = os.environ.get("DB_NAME", "viewgerdb")

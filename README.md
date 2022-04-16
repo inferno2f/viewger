@@ -12,7 +12,7 @@
 **- !!!Важно!!!** после успешного запуска приложения, зайдите в командую строку контейнера viewger_app:\
 `docker exec -it viewger_app /bin/bash` \
 и примените миграции:\
-`cd app && flask db upgrade`
+`flask db upgrade`
 
 ## Работа с Postgres в контейнере
 Для работы с БД зайдите в командную строку контейнера viewger_postgres и исполните команду `psql viewger`\

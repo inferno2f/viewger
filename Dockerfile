@@ -5,6 +5,4 @@ WORKDIR /app
 RUN apt update && apt install -y gcc libpq-dev
 COPY . .
 RUN pip3 install -r /app/requirements.txt --no-cache-dir && \
-    chmod +x gunicorn.sh
-
-ENTRYPOINT ["sh", "gunicorn.sh"]
+    chmod +x docker-entrypoint.sh

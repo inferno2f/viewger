@@ -16,11 +16,20 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 2s
+      timeout: 2s
+      retries: 5
 
   app:
     container_name: viewger_app
     build: .
     depends_on:
+      db:
+        condition: service_healthy
+    links:
       - db
+    command: ["sh", "docker-entrypoint.sh"]
     ports:
       - ${APP_EXTERNAL_PORT}:${APP_PORT}

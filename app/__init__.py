@@ -2,6 +2,7 @@ import os
 
 from pathlib import Path
 
+from app.modules.admin import admin
 from flask_migrate import Migrate
 from flask import Flask
 from dotenv import load_dotenv
@@ -24,5 +25,7 @@ def create_app():
     app.register_blueprint(views.bp)
 
     migrate.init_app(app, db)
+
+    admin.init_app(app, db)
 
     return app

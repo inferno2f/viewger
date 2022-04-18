@@ -19,12 +19,12 @@ class Project(db.Model):
         return f"{self.name} - id: {self.id}"
 
 
-# class Member(db.Model):
-#     __tablename__ = "member"
-#
-#     user_id = db.Column(db.Integer, ForeignKey('users.id'), primary_key=True)
-#     project_id = db.Column(db.Integer, ForeignKey('project.id'))
-#     role = db.Column(pgEnum(name='role'))
-#
-#     def __repr__(self):
-#         return f"user_id {self.user_id} - project_id {self.skill_id}"
+class Member(db.Model):
+    __tablename__ = "member"
+
+    user_id = db.Column(db.Integer, ForeignKey('users.id'), primary_key=True)
+    project_id = db.Column(db.Integer, ForeignKey('project.id'))
+    role = db.Column(pgEnum(name='role'))
+
+    def __repr__(self):
+        return f"user_id {self.user_id} - project_id {self.skill_id}"

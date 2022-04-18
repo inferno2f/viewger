@@ -15,6 +15,8 @@ class User(db.Model):
     authors = db.relationship('User', backref=db.backref('pull_request', lazy=True))
     reviewers = db.relationship('User', backref=db.backref('review', lazy=True))
     members = db.relationship('User', backref=db.backref('member', lazy=True))
+    skills = db.relationship('User', backref=db.backref('user_skill', lazy=True))
+
 
     def __repr__(self):
         return f"{self.username} - id: {self.id}"

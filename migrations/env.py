@@ -20,8 +20,8 @@ logger = logging.getLogger("alembic.env")
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from app.modules.user.models import User
-from app.modules.pull_request.models import PullRequest
-from app.modules.project.models import Project
+from app.modules.pull_request.models import PullRequest, Review
+from app.modules.project.models import Project, Member
 
 config.set_main_option(
     "sqlalchemy.url",

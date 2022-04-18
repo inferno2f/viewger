@@ -18,19 +18,13 @@ depends_on = None
 
 def upgrade():
     op.create_table(
-        "user",
+        "users",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("username", sa.String(length=64), nullable=False),
-        sa.Column("email", sa.String(length=128), unique=True, nullable=True),
+        sa.Column("email", sa.String(length=128), nullable=True),
         sa.Column("grade", sa.String(length=24), nullable=True),
         sa.Column(
             "is_admin", sa.Boolean(), server_default=sa.text("false"), nullable=False
-        ),
-        sa.Column("result_all", postgresql.JSON(astext_type=sa.Text()), nullable=True),
-        sa.Column(
-            "result_no_stop_words",
-            postgresql.JSON(astext_type=sa.Text()),
-            nullable=True,
         ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("email"),

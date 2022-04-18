@@ -17,3 +17,18 @@
 ## Работа с Postgres в контейнере
 Для работы с БД зайдите в командную строку контейнера viewger_postgres и исполните команду `psql viewger`\
 Просмотреть все имеющиеся таблицы можно при помощи команды `\dt`
+
+## Contributing
+- Создайте виртуальное окружение и установите зависимости для разработки\
+`$ pip install -r requirements-dev.txt`
+- Активируйте виртуальное окружение
+- Настройте git hooks\
+`pre-commit install`
+
+Для проверки и исправления кода согласно PEP8 введите (virtualenv should be enabled):\
+`export SKIP=pytest && pre-commit
+ run --all-files && export SKIP=''`
+- `git commit` теперь не будет работать без активированного venv
+- либо используйте ключ `git commit --no-verify`,
+ но тогда hooks не запустят проверки кода перед коммитом
+- конфигурационный файл для **flake8** и **black** `pyproject.toml`

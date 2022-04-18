@@ -1,0 +1,30 @@
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.black]
+skip-string-normalization = true
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | \.env
+)/
+'''
+
+[tool.flake8]
+per-file-ignores = '''
+    __init__.py:F401
+'''
+exclude = '''
+/(
+    */migrations/
+    | venv/
+    | env/
+)/
+'''
+max-line-length = 120
+max-complexity = 10

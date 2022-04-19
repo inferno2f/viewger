@@ -7,11 +7,11 @@ class Skill(db.Model):
     __tablename__ = "skill"
 
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.VARCHAR, unique=True)
-    name = db.Column(db.VARCHAR, unique=True)
+    code = db.Column(db.VARCHAR, unique=True, nullable=False)
+    name = db.Column(db.VARCHAR, unique=True, nullable=False)
 
-    pr_skills = db.relationship('Skill', backref=db.backref('pr_skill', lazy=True))
-    user_skills = db.relationship('Skill', backref=db.backref('user_skill', lazy=True))
+    pull_requests = db.relationship('PRSkill', backref=db.backref('skill', lazy=True))
+    members = db.relationship('UserSkill', backref=db.backref('skill', lazy=True))
 
     def __repr__(self):
         return f"{self.name} - id: {self.id}"
@@ -20,8 +20,9 @@ class Skill(db.Model):
 class PRSkill(db.Model):
     __tablename__ = "pr_skill"
 
-    pr_id = db.Column(db.Integer, ForeignKey('pull_request.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, ForeignKey('skill.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    pr_id = db.Column(db.Integer, ForeignKey('pull_request.id'), nullable=False)
+    skill_id = db.Column(db.Integer, ForeignKey('skill.id'), nullable=False)
 
     def __repr__(self):
         return f"pr_id {self.pr_id} - skill_id {self.skill_id}"
@@ -30,8 +31,9 @@ class PRSkill(db.Model):
 class UserSkill(db.Model):
     __tablename__ = "user_skill"
 
-    user_id = db.Column(db.Integer, ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, ForeignKey('skill.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    skill_id = db.Column(db.Integer, ForeignKey('skill.id'), nullable=False)
 
     def __repr__(self):
-        return f"user_id {self.user_id} - skill_id {self.skill_id}"
+        return f"users_id {self.users_id} - skill_id {self.skill_id}"

@@ -1,8 +1,8 @@
-"""init pull request module
+"""init pull request
 
-Revision ID: 56555fe32197
-Revises: 8d296729bd1f
-Create Date: 2022-04-18 21:15:07.399767
+Revision ID: 022d8a4da8d7
+Revises: 39086f7fbd4e
+Create Date: 2022-04-19 14:22:29.853402
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '56555fe32197'
-down_revision = '8d296729bd1f'
+revision = '022d8a4da8d7'
+down_revision = '39086f7fbd4e'
 branch_labels = None
 depends_on = None
 
@@ -22,10 +22,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('jira_task_id', sa.Integer(), nullable=False),
     sa.Column('priority', sa.Integer(), nullable=False),
-    sa.Column('author_id', sa.Integer(), nullable=False),
     sa.Column('opened_at', sa.TIMESTAMP(), nullable=False),
     sa.Column('closed_at', sa.TIMESTAMP(), nullable=False),
-    sa.ForeignKeyConstraint(['author_id'], ['users.id'], name=op.f('fk_pull_request_author_id_users')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_pull_request'))
     )
     # ### end Alembic commands ###

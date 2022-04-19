@@ -5,7 +5,6 @@ from app.db import db
 
 
 class PullRequest(db.Model):
-
     __tablename__ = "pull_request"
 
     id = db.Column(db.Integer, primary_key=True)

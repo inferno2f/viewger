@@ -12,8 +12,8 @@ class Project(db.Model):
     description = db.Column(db.VARCHAR, nullable=False)
     started_at = db.Column(db.TIMESTAMP, nullable=False)
 
-    pr_projects = db.relationship('Project', backref=db.backref('pull_request', lazy=True))
-    member_projects = db.relationship('Project', backref=db.backref('member', lazy=True))
+    pr_projects = db.relationship('PullRequest', backref=db.backref('project', lazy=True))
+    member_projects = db.relationship('Member', backref=db.backref('project', lazy=True))
 
     def __repr__(self):
         return f"{self.name} - id: {self.id}"
@@ -22,8 +22,9 @@ class Project(db.Model):
 class Member(db.Model):
     __tablename__ = "member"
 
-    user_id = db.Column(db.Integer, ForeignKey('users.id'), primary_key=True)
-    project_id = db.Column(db.Integer, ForeignKey('project.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    project_id = db.Column(db.Integer, ForeignKey('project.id'), nullable=False)
     role = db.Column(pgEnum(name='role'))
 
     def __repr__(self):

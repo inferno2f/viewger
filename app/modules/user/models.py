@@ -10,7 +10,7 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(128), unique=True)
     grade = db.Column(db.String(24))
-    is_admin = db.Column(db.Boolean, server_default=expression.false(), nullable=False)  # noqa: E501
+    is_admin = db.Column(db.Boolean, server_default=expression.false(), nullable=False)
 
     def __repr__(self):
         return f"{self.username} - id: {self.id}"

@@ -13,7 +13,7 @@ linting-job:
   script:
     - isort . --check-only
     - flake8 .
-    - black .
+    - black --check .
 
 test-job:
   stage: test

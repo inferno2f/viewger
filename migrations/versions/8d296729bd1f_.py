@@ -26,6 +26,12 @@ def upgrade():
         sa.Column(
             "is_admin", sa.Boolean(), server_default=sa.text("false"), nullable=False
         ),
+        sa.Column("result_all", postgresql.JSON(astext_type=sa.Text()), nullable=True),
+        sa.Column(
+            "result_no_stop_words",
+            postgresql.JSON(astext_type=sa.Text()),
+            nullable=True,
+        ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("email"),
         sa.UniqueConstraint("username"),

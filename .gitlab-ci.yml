@@ -9,11 +9,11 @@ linting-job:
   before_script:
     - pip install isort
     - pip install flake8
+    - pip install black
   script:
-    - echo "isort checking..."
     - isort . --check-only
-    - echo "flake8 checking..."
     - flake8 .
+    - black .
 
 test-job:
   stage: test

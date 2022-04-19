@@ -1,4 +1,3 @@
-from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.postgresql import ENUM as pgEnum
 
 from app.db import db
@@ -12,8 +11,8 @@ class Project(db.Model):
     description = db.Column(db.VARCHAR, nullable=False)
     started_at = db.Column(db.TIMESTAMP, nullable=False)
 
-    pr_projects = db.relationship('PullRequest', backref=db.backref('project', lazy=True))
-    member_projects = db.relationship('Member', backref=db.backref('project', lazy=True))
+    pull_requests = db.relationship('PullRequest', backref=db.backref('project', lazy=True))
+    members = db.relationship('Member', backref=db.backref('project', lazy=True))
 
     def __repr__(self):
         return f"{self.name} - id: {self.id}"
@@ -23,8 +22,8 @@ class Member(db.Model):
     __tablename__ = "member"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
-    project_id = db.Column(db.Integer, ForeignKey('project.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     role = db.Column(pgEnum(name='role'))
 
     def __repr__(self):

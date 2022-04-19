@@ -14,7 +14,7 @@ class User(db.Model):
 
     pull_requests = db.relationship('PullRequest', backref=db.backref('users', lazy=True))
     reviews = db.relationship('Review', backref=db.backref('users', lazy=True))
-    members = db.relationship('Member', backref=db.backref('users', lazy=True))
+    projects = db.relationship('Member', backref=db.backref('users', lazy=True))
     user_skills = db.relationship('UserSkill', backref=db.backref('users', lazy=True))
 
     def __repr__(self):

@@ -18,8 +18,7 @@ class Skill(db.Model):
 class PRSkill(db.Model):
     __tablename__ = "pr_skill"
 
-    id = db.Column(db.Integer, primary_key=True)
-    pr_id = db.Column(db.Integer, db.ForeignKey('pull_request.id'), nullable=False)
+    pr_id = db.Column(db.Integer, db.ForeignKey('pull_request.id'), primary_key=True, nullable=False)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
 
     def __repr__(self):
@@ -29,8 +28,7 @@ class PRSkill(db.Model):
 class UserSkill(db.Model):
     __tablename__ = "user_skill"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True, nullable=False)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'), nullable=False)
 
     def __repr__(self):

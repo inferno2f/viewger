@@ -12,5 +12,10 @@ class User(db.Model):
     grade = db.Column(db.String(24))
     is_admin = db.Column(db.Boolean, server_default=expression.false(), nullable=False)
 
+    pull_requests = db.relationship('PullRequest', backref=db.backref('users', lazy=True))
+    reviews = db.relationship('Review', backref=db.backref('users', lazy=True))
+    projects = db.relationship('Member', backref=db.backref('users', lazy=True))
+    skills = db.relationship('UserSkill', backref=db.backref('users', lazy=True))
+
     def __repr__(self):
         return f"{self.username} - id: {self.id}"

@@ -35,4 +35,4 @@ def webhook():
             updated_at=payload['object_attributes']['updated_at'],
             description=payload['object_attributes']['description'],
         )
-        return mr
+        return {'result': mr.__dict__}

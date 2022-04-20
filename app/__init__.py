@@ -6,7 +6,7 @@ from flask import Flask
 from flask_migrate import Migrate
 
 from app.db import db
-from app.modules import main
+from app.modules import connector, main
 
 basedir = Path(__file__).resolve().parent.parent
 load_dotenv(basedir.joinpath(".env"))
@@ -22,6 +22,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    app.register_blueprint(main.views.blueprint, url_prefix="/")
+    app.register_blueprint(main.views.blueprint)
+    app.register_blueprint(connector.handler.blueprint)
 
     return app

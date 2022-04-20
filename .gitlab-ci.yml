@@ -7,11 +7,9 @@ stages:
 linting-job:
   stage: linting
   before_script:
-    - pip install isort
     - pip install flake8
     - pip install black
   script:
-    - isort . --check-only
     - flake8 .
     - black --check .
 

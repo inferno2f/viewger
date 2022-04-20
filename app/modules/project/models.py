@@ -1,5 +1,3 @@
-from sqlalchemy.dialects.postgresql import ENUM as pgEnum
-
 from app.db import db
 
 

@@ -1,17 +1,16 @@
 """init member
 
-Revision ID: 27cb6fa450c2
-Revises: e7ea86d47183
-Create Date: 2022-04-19 14:29:45.056919
+Revision ID: b81844e2357e
+Revises: af0d84abfe17
+Create Date: 2022-04-20 13:16:00.740488
 
 """
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '27cb6fa450c2'
-down_revision = 'e7ea86d47183'
+revision = 'b81844e2357e'
+down_revision = 'af0d84abfe17'
 branch_labels = None
 depends_on = None
 
@@ -22,7 +21,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
-    sa.Column('role', postgresql.ENUM(name='role'), nullable=True),
+    sa.Column('role', sa.Enum(name='roles'), nullable=True),
     sa.ForeignKeyConstraint(['project_id'], ['project.id'], name=op.f('fk_member_project_id_project')),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_member_user_id_users')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_member'))

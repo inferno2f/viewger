@@ -32,6 +32,3 @@ class ReviewManager:
         for mr in mrs:
             print(mr.id, mr.title, mr.get_id())
             print(mr.reviewers)
-
-test = ReviewManager()
-test.retrieve_viewger_team()

@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_migrate import Migrate
 
-from app.db import db
-from app.modules import forge, main
-
 basedir = Path(__file__).resolve().parent.parent
 load_dotenv(basedir.joinpath(".env"))
 
@@ -17,12 +14,17 @@ migrate = Migrate()
 def create_app():
     # create and configure the app
     app = Flask(__name__)
-    app.config.from_object(os.environ["APP_SETTINGS"])
 
-    db.init_app(app)
-    migrate.init_app(app, db)
+    with app.app_context():
+        app.config.from_object(os.environ["APP_SETTINGS"])
 
-    app.register_blueprint(main.views.blueprint)
-    app.register_blueprint(forge.handler.blueprint)
+        from app.db import db
+        from app.modules import forge, main
+
+        db.init_app(app)
+        migrate.init_app(app, db)
+
+        app.register_blueprint(main.views.blueprint)
+        app.register_blueprint(forge.handler.blueprint)
 
     return app

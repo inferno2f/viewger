@@ -15,16 +15,15 @@ def create_app():
     # create and configure the app
     app = Flask(__name__)
 
-    with app.app_context():
-        app.config.from_object(os.environ["APP_SETTINGS"])
+    app.config.from_object(os.environ["APP_SETTINGS"])
 
-        from app.db import db
-        from app.modules import forge, main
+    from app.db import db
+    from app.modules import forge, main
 
-        db.init_app(app)
-        migrate.init_app(app, db)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-        app.register_blueprint(main.views.blueprint)
-        app.register_blueprint(forge.views.blueprint)
+    app.register_blueprint(main.views.blueprint)
+    app.register_blueprint(forge.views.blueprint)
 
     return app

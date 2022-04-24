@@ -25,6 +25,6 @@ def create_app():
         migrate.init_app(app, db)
 
         app.register_blueprint(main.views.blueprint)
-        app.register_blueprint(forge.handler.blueprint)
+        app.register_blueprint(forge.views.blueprint)
 
     return app

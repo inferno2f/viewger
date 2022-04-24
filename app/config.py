@@ -20,8 +20,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GITLAB_URL = os.environ.get('GITLAB_URL')
     GITLAB_TOKEN = os.environ.get('GITLAB_TOKEN')
-    REVIEWER_ID = 70755 # Ivan Golikov
-    PROJECT_ID = 131110 # Viewger project
+    REVIEWER_ID = 70755  # Ivan Golikov
+    PROJECT_ID = 131110  # Viewger project
+
 
 class ProductionConfig(Config):
     DEBUG = False

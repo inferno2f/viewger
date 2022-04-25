@@ -8,8 +8,9 @@ blueprint = Blueprint("forge", __name__)
 @blueprint.route('/new_mr', methods=['POST'])
 def process_new_mr():
     if request.headers.get('X-Gitlab-Event') == 'Merge Request Hook':
-        project_id, mr_id = request.json.get('project_id'), request.json.get('id')
+        project_id = request.json.get('project_id')
+        mr_id = request.json.get('id')
         manager = ReviewManager()
         reviewer_id = manager.select_reviewer_for_mr()
         manager.assign_reviewer(project_id, mr_id, reviewer_id)
-        return {'result': Response(status=201)}
+        return Response({'status': 'created'}, status=201, mimetype='application/json')

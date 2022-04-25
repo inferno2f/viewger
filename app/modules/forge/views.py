@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, request
 
 from app.modules.forge.review_manager import ReviewManager
 
@@ -13,4 +13,4 @@ def process_new_mr():
         manager = ReviewManager()
         reviewer_id = manager.select_reviewer_for_mr()
         manager.assign_reviewer(project_id, mr_id, reviewer_id)
-        return Response({'status': 'created'}, status=201, mimetype='application/json')
+        return {'status': 'created'}, 201

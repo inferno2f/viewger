@@ -2,7 +2,7 @@ from flask import current_app
 
 
 # FIXME: переделать тест так, чтобы не шли запросы к API
-def test_prcoess_new_mr(app, client):
+def test_process_new_mr(app, client):
     with app.app_context():
         reviewer = current_app.config['REVIEWER_ID']
         response = client.post(

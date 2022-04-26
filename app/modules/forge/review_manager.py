@@ -20,4 +20,4 @@ class ReviewManager:
 
     def select_reviewer_for_mr(self):
         """Placeholder method for reviewer selection algorithm."""
-        return current_app.config["REVIEWER_ID"]
+        return current_app.config['REVIEWER_ID']

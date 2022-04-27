@@ -1,8 +1,13 @@
 from flask import current_app
+from app.modules.forge.review_manager import ReviewManager
 
 
-# FIXME: переделать тест так, чтобы не шли запросы к API
-def test_process_new_mr(app, client):
+def test_process_new_mr(app, client, monkeypatch):
+    def mocked_assign(*args):
+        return {'status': 'created'}, 201
+
+    monkeypatch.setattr(ReviewManager, 'assign_reviewer', mocked_assign)
+
     with app.app_context():
         reviewer = current_app.config['REVIEWER_ID']
         response = client.post(

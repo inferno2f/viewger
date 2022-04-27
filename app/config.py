@@ -8,9 +8,13 @@ load_dotenv(basedir.joinpath(".env"))
 
 
 class Config:
+    # Flask
     DEBUG = False
     TESTING = False
     SECRET_KEY = "dev"  # should be changed for production version
+    LOG_LEVEL = os.environ.get("LOG_LEVEL")
+
+    # Postgres
     DB_USER = os.environ.get("DB_USER", "user")
     DB_PASS = os.environ.get("DB_PASS", "password")
     DB_HOST = os.environ.get("DB_HOST", "localhost")
@@ -18,8 +22,10 @@ class Config:
     DB_NAME = os.environ.get("DB_NAME", "viewgerdb")
     SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    GITLAB_URL = os.environ.get('GITLAB_URL')
-    GITLAB_TOKEN = os.environ.get('GITLAB_TOKEN')
+
+    # GitLab
+    GITLAB_URL = os.environ.get("GITLAB_URL")
+    GITLAB_TOKEN = os.environ.get("GITLAB_TOKEN")
     REVIEWER_ID = 70755  # Ivan Golikov
     PROJECT_ID = 131110  # Viewger project
 

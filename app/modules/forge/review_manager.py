@@ -1,9 +1,9 @@
+import logging
 from flask import current_app
 
 from app.gitlab_client import gitlab_client
-from app.logger_config import logger
 
-logger.name = __name__
+logger = logging.getLogger(__name__)
 
 
 class ReviewManager:

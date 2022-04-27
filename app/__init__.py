@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -19,6 +20,8 @@ def create_app():
     app = Flask(__name__)
 
     app.config.from_object(os.environ["APP_SETTINGS"])
+
+    logging.basicConfig(level=app.config['LOG_LEVEL'], format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
     db.init_app(app)
     gitlab_client.init_app(app)

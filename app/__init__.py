@@ -16,10 +16,13 @@ load_dotenv(basedir.joinpath(".env"))
 migrate = Migrate()
 
 
-def create_app():
+def create_app(config: dict = None):
     app = Flask(__name__)
 
     app.config.from_object(os.environ["APP_SETTINGS"])
+
+    if config:
+        app.config.update(config)
 
     logging.basicConfig(level=app.config['LOG_LEVEL'], format='%(asctime)s %(levelname)s %(name)s %(message)s')
 

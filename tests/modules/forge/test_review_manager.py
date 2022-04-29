@@ -25,3 +25,12 @@ def test_assign_reviewer(app, mocker: MockerFixture, mr_id, reviewer_id):
     rm.assign_reviewer(None, mr_id, reviewer_id)
 
     update_mr_mock.assert_called_once_with(mr_id, {'reviewer_ids': [reviewer_id]})
+
+
+@pytest.mark.parametrize("reviewer_id", range(10))
+def test_select_reviewer_for_mr(create_configured_app, reviewer_id):
+    app = create_configured_app({'REVIEWER_ID': reviewer_id})
+    rm = ReviewManager()
+
+    with app.app_context():
+        assert rm.select_reviewer_for_mr() == app.config['REVIEWER_ID']

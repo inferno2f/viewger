@@ -9,6 +9,13 @@ def app():
 
 
 @pytest.fixture
+def create_configured_app():
+    def _create_app(config: dict):
+        return create_app(config)
+    return _create_app
+
+
+@pytest.fixture
 def client(app):
     return app.test_client()
 

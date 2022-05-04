@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_migrate import Migrate
 
+from app.commands import pull_gitlab_data
 from app.db import db
 from app.gitlab_client import gitlab_client
 from app.modules import forge, main
@@ -30,7 +31,10 @@ def create_app(config: dict = None):
     gitlab_client.init_app(app)
     migrate.init_app(app, db)
 
+    # app.register_blueprint(commands.pull_gitlab_data)
     app.register_blueprint(main.views.blueprint)
     app.register_blueprint(forge.views.blueprint)
+
+    app.cli.add_command(pull_gitlab_data)
 
     return app

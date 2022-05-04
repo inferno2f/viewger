@@ -9,8 +9,8 @@ class Project(db.Model):
     description = db.Column(db.String(512), nullable=False)
     started_at = db.Column(db.DateTime, nullable=False)
 
-    pull_requests = db.relationship('PullRequest', backref=db.backref('project', lazy=True))
-    members = db.relationship('Member', backref=db.backref('project', lazy=True))
+    # pull_requests = db.relationship('PullRequest', backref=db.backref('project', lazy=True))
+    # members = db.relationship('Member', backref=db.backref('project', lazy=True))
 
     def __repr__(self):
         return f"{self.name} - id: {self.id}"

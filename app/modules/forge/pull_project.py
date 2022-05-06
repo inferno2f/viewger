@@ -8,7 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 class PullProject:
-    def pull_project(self, project_name):
+    @staticmethod
+    def pull_project(project_name):
         """Gets project data from site"""
         logger.info(f'Searching for {project_name} project on git.epam.com')
         project = gitlab_client.projects.get('epm-lstr/epm-lstr-vwg/' + project_name)

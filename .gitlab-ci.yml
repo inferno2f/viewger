@@ -12,12 +12,16 @@ stages:
 
 flake8-job:
   stage: linting&tests
+  rules:
+    - when: always
   script:
     - echo "Running flake8..."
     - pflake8 .
 
 black-job:
   stage: linting&tests
+  rules:
+    - when: always
   script:
     - echo "Running black..."
     - black --check .

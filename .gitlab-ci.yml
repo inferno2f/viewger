@@ -1,25 +1,31 @@
 image: python:latest
 
-stages:
-  - linting
-  - test
+before_script:
+  - pip install flake8
+  - pip install pyproject-flake8
+  - pip install black
+  - echo "Installing requirements..."
+  - pip install -r requirements-dev.txt
 
-linting-job:
-  stage: linting
-  before_script:
-    - pip install flake8
-    - pip install black
+stages:
+  - linting&tests
+
+flake8-job:
+  stage: linting&tests
   script:
-    - flake8 .
+    - echo "Running flake8..."
+    - pflake8 .
+
+black-job:
+  stage: linting&tests
+  script:
+    - echo "Running black..."
     - black --check .
 
 test-job:
-  stage: test
+  stage: linting&tests
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev" || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "dev" || $CI_COMMIT_BRANCH == "dev"
-  before_script:
-    - echo "Installing requirements..."
-    - pip install -r requirements-dev.txt
   script:
     - echo "Running tests..."
     - python3 -m pytest tests/

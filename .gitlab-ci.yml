@@ -17,7 +17,7 @@ linting&test-job:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev" || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "dev" || $CI_COMMIT_BRANCH == "dev"
 
   script:
-    - flake8 .
+    - pflake8 .
     - black --check .
     - echo "Running tests..."
     - python3 -m pytest tests/

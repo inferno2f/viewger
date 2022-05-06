@@ -33,8 +33,3 @@ test-job:
   script:
     - echo "Running tests..."
     - python3 -m pytest tests/
-
-enable_merge:
-  only: [merge_requests]
-  script:
-    - echo true

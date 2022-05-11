@@ -12,6 +12,7 @@ def app():
 def create_configured_app():
     def _create_app(config: dict):
         return create_app(config)
+
     return _create_app
 
 

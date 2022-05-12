@@ -31,6 +31,7 @@ def create_app(config: dict = None):
     gitlab_client.init_app(app)
     migrate.init_app(app, db)
 
+    # app.register_blueprint(commands.pull_gitlab_data)
     app.register_blueprint(main.views.blueprint)
     app.register_blueprint(forge.views.blueprint)
 

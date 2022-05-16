@@ -5,7 +5,7 @@ from app.gitlab_client import gitlab_client as gl
 from app.modules.project.models import Project
 from app.modules.user.models import User
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 
 class ViewgerServices:

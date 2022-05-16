@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class ViewgerServices:
     @staticmethod
-    def pull_project_data(project_name):
+    def pull_project_data(project_name: str) -> Project:
         """
         Gets project data from site
         """
@@ -24,7 +24,15 @@ class ViewgerServices:
         if not Project.query.filter_by(id=project.id).first():
             db.session.add(project_data)
             db.session.commit()
+        return project_data
 
+    @staticmethod
+    def pull_project_members(project: Project):
+        """
+        Fetch members of a project from GitLab API, add them to the database
+        :param project: Project
+        """
+        project = gl.projects.get(project.id)
         members = project.members.list()
         for member in members:
             if not User.query.filter_by(username=member.attributes.get('username')).first():

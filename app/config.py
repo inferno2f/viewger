@@ -27,7 +27,6 @@ class Config:
     GITLAB_URL = os.environ.get("GITLAB_URL")
     GITLAB_TOKEN = os.environ.get("GITLAB_TOKEN")
     OBSERVED_PROJECT_NAME = os.environ.get("OBSERVED_PROJECT_NAME")
-    PROJECT_ID = os.environ.get("PROJECT_ID")  # 131110 Viewger project
     REVIEWER_ID = 70755  # Ivan Golikov
 
 

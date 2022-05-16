@@ -10,6 +10,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
+    forge_id = db.Column(db.Integer, unique=True, nullable=False)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(128), unique=True)
     grade = db.Column(db.String(24))

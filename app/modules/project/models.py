@@ -18,6 +18,7 @@ class Project(db.Model):
     __tablename__ = "project"
 
     id = db.Column(db.Integer, primary_key=True)
+    forge_id = db.Column(db.Integer, unique=True, nullable=False)
     name = db.Column(db.String(32), nullable=False)
     description = db.Column(db.String(512), nullable=True)
     started_at = db.Column(db.DateTime, nullable=False)

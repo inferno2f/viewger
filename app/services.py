@@ -16,8 +16,9 @@ class ViewgerServices:
         Gets project data from site
         """
         logger.info(f'Searching for {project_name} project on git.epam.com')
-        project = gl.projects.get('epm-lstr/epm-lstr-vwg/' + project_name)
-        os.environ["PROJECT_ID"] = str(project.id)
+        project_name_space = f'epm-lstr/epm-lstr-vwg/{project_name}'
+        project = gl.projects.get(project_name_space)
+        os.environ['PROJECT_ID'] = str(project.id)
         project_data = Project(
             id=project.id, name=project.name, description=project.description, started_at=project.created_at
         )
@@ -27,11 +28,12 @@ class ViewgerServices:
         return project_data
 
     @staticmethod
-    def pull_project_members(project: Project):
+    def pull_project_members(project: Project) -> None:
         """
         Fetch members of a project from GitLab API, add them to the database
         :param project: Project
         """
+        logger.info(f'Fetching members of {project.name} project')
         project = gl.projects.get(project.id)
         members = project.members.list()
         for member in members:

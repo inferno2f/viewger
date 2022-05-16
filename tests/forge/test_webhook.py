@@ -1,9 +1,9 @@
 import datetime
 
 from flask import current_app
-from app.services import ViewgerServices
 from app.modules.forge.review_manager import ReviewManager
 from app.modules.project.models import Project
+from app.services import ViewgerServices
 
 
 def test_process_new_mr(app, client, monkeypatch):
@@ -24,11 +24,11 @@ def test_process_new_mr(app, client, monkeypatch):
 
 def test_pull_project(app, client, monkeypatch):
     def mocked_pull(*args):
-        return Project(id=131110, name='viewger', description=None, started_at=datetime.datetime.now())
+        return Project(forge_id=131110, name='viewger', description=None, started_at=datetime.datetime.now())
 
     monkeypatch.setattr(ViewgerServices, 'pull_project_data', mocked_pull)
 
     with app.app_context():
-        p = ViewgerServices
+        p = ViewgerServices()
         project = p.pull_project_data('viewger')
-        assert project.id == 131110
+        assert project.forge_id == 131110

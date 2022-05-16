@@ -5,7 +5,7 @@ from app.services import ViewgerServices
 from flask import current_app
 from flask.cli import with_appcontext
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 
 @click.command(name='pull_gitlab_data')

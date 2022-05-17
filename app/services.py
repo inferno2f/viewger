@@ -17,8 +17,10 @@ class ViewgerServices:
         """
         logger.info(f'Searching for {project_name} project on git.epam.com')
         project_name_space = f'epm-lstr/epm-lstr-vwg/{project_name}'
+        # FIXME: Throws a 404 error, project not found
         project = gl.projects.get(project_name_space)
         os.environ['PROJECT_ID'] = str(project.id)
+        # FIXME: Need to add 'forge_id' parameter to create an instance of Project
         project_data = Project(
             id=project.id, name=project.name, description=project.description, started_at=project.created_at
         )

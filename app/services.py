@@ -17,15 +17,24 @@ class ViewgerServices:
         """
         logger.info(f'Searching for {project_name} project on git.epam.com')
         project_name_space = f'epm-lstr/epm-lstr-vwg/{project_name}'
-        # FIXME: Throws a 404 error, project not found
         project = gl.projects.get(project_name_space)
         os.environ['PROJECT_ID'] = str(project.id)
-        # FIXME: Need to add 'forge_id' parameter to create an instance of Project
         project_data = Project(
-            id=project.id, name=project.name, description=project.description, started_at=project.created_at
+            forge_id=project.id, name=project.name, description=project.description, started_at=project.created_at
         )
         if not Project.query.filter_by(id=project.id).first():
             db.session.add(project_data)
+            db.session.commit()
+        else:
+            Project.query.update(
+                {
+                    'forge_id': project.id,
+                    'name': project.name,
+                    'description': project.description,
+                    'started_at': project.created_at,
+                }
+            )
+            logger.info(f'Updating {project_name} project info')
             db.session.commit()
         return project_data
 
@@ -36,10 +45,11 @@ class ViewgerServices:
         :param project: Project
         """
         logger.info(f'Fetching members of {project.name} project')
-        project = gl.projects.get(project.id)
+        project = gl.projects.get(project.forge_id)
         members = project.members.list()
         for member in members:
             if not User.query.filter_by(username=member.attributes.get('username')).first():
-                user = User(id=member.id, username=member.username)
+                user = User(forge_id=member.id, username=member.username)
                 db.session.add(user)
                 db.session.commit()
+                logger.info(f'Added {member.username} to the database')

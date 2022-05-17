@@ -13,6 +13,8 @@ logger = logging.getLogger()
 def pull_gitlab_data():
     """Pulling project's data from Gitlab"""
     logger.info("Pulling project's data from Gitlab")
-    p = ViewgerServices()
+
     project_name = current_app.config['OBSERVED_PROJECT_NAME']
-    p.pull_project_data(project_name)
+    p = ViewgerServices(project_name)
+    p.pull_project_data()
+    p.pull_project_members()

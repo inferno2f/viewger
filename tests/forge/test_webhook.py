@@ -29,6 +29,6 @@ def test_pull_project(app, client, monkeypatch):
     monkeypatch.setattr(ViewgerServices, 'pull_project_data', mocked_pull)
 
     with app.app_context():
-        p = ViewgerServices()
-        project = p.pull_project_data('viewger')
+        p = ViewgerServices('viewger')
+        project = p.pull_project_data()
         assert project.forge_id == 131110

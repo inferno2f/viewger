@@ -12,4 +12,4 @@ convention = {
 
 metadata = MetaData(naming_convention=convention)
 
-db = SQLAlchemy(metadata=metadata)
+db = SQLAlchemy(metadata=metadata, session_options={"autoflush": False})

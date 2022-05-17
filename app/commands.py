@@ -1,7 +1,7 @@
 import click
 import logging
 
-from app.services import ViewgerServices
+from app.services import pull_project_data, pull_project_members
 from flask import current_app
 from flask.cli import with_appcontext
 
@@ -15,6 +15,5 @@ def pull_gitlab_data():
     logger.info("Pulling project's data from Gitlab")
 
     project_name = current_app.config['OBSERVED_PROJECT_NAME']
-    p = ViewgerServices(project_name)
-    p.pull_project_data()
-    p.pull_project_members()
+    observed_project = pull_project_data(project_name)
+    pull_project_members(observed_project)

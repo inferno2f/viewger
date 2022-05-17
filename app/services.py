@@ -8,48 +8,51 @@ from app.modules.user.models import User
 logger = logging.getLogger()
 
 
-class ViewgerServices:
-    def __init__(self, project_name):
-        self.project_name = project_name
-        project_name_space = f'epm-lstr/epm-lstr-vwg/{self.project_name}'
-        logger.info(f'Searching for {self.project_name} project on git.epam.com')
-        self.project = gl.projects.get(project_name_space)
+def create_or_update_object(object_type: str, object_data: dict) -> None:
+    """
+    Create or update an object in the database
+    :param object_type: str
+    :param object_data: dict
+    """
+    observed_object = object_type.query.filter_by(forge_id=object_data['forge_id']).first()
+    if observed_object:
+        db.session.merge(object_type(**object_data))
+        logger.info(f'{object_type.__name__} {object_data["forge_id"]} already exists in the database, updating data')
+    else:
+        db.session.add(object_type(**object_data))
+        logger.info(f'Added {object_type.__name__} {object_data["forge_id"]} to the database')
+        db.session.commit()
+    return object_type.query.filter_by(forge_id=object_data['forge_id']).first()
 
-    def pull_project_data(self) -> Project:
-        """
-        Fetch project info from gitlab.project & add them to the db
-        """
-        project_data = Project(
-            forge_id=self.project.id,
-            name=self.project.name,
-            description=self.project.description,
-            started_at=self.project.created_at,
-        )
-        if not Project.query.first():
-            db.session.add(project_data)
-            logger.info(f'Fetching {self.project_name} project info')
-            db.session.commit()
-        else:
-            Project.query.update(
-                {
-                    'forge_id': self.project.id,
-                    'name': self.project.name,
-                    'description': self.project.description,
-                    'started_at': self.project.created_at,
-                }
-            )
-            logger.info(f'Updating {self.project_name} project info')
-            db.session.commit()
-        return project_data
 
-    def pull_project_members(self) -> None:
-        """
-        Fetch members of a project from gitlab.project & add them to the db
-        """
-        logger.info(f'Fetching members of {self.project.name} project')
-        members = self.project.members.list()
-        for member in members:
-            if not User.query.filter_by(username=member.attributes.get('username')).first():
-                user = User(forge_id=member.id, username=member.username)
-                db.session.add(user)
-                db.session.commit()
+def pull_project_data(project_name: str) -> Project:
+    """
+    Gets project data from site
+    """
+    logger.info(f'Searching for {project_name} project on git.epam.com')
+    project_name_space = f'epm-lstr/epm-lstr-vwg/{project_name}'
+    project = gl.projects.get(project_name_space)
+    project_data = {
+        'forge_id': project.id,
+        'name': project.name,
+        'description': project.description,
+        'started_at': project.created_at,
+    }
+    project = create_or_update_object(Project, project_data)
+    return project
+
+
+def pull_project_members(project: Project) -> None:
+    """
+    Fetch members of a project from GitLab API, add them to the database
+    :param project: Project
+    """
+    logger.info(f'Fetching members of {project.name} project')
+    project = gl.projects.get(project.forge_id)
+    members = project.members.list()
+    for member in members:
+        user_data = {
+            'forge_id': member.id,
+            'username': member.username,
+        }
+        create_or_update_object(User, user_data)

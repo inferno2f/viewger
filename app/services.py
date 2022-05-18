@@ -8,7 +8,7 @@ from app.modules.user.models import User
 logger = logging.getLogger()
 
 
-def create_or_update_object(object_type: str, object_data: dict) -> None:
+def create_or_update_object(object_type: str, object_data: dict) -> object:
     """
     Create or update an object in the database
     :param object_type: str
@@ -21,7 +21,7 @@ def create_or_update_object(object_type: str, object_data: dict) -> None:
     else:
         db.session.add(object_type(**object_data))
         logger.info(f'Added {object_type.__name__} {object_data["forge_id"]} to the database')
-        db.session.commit()
+    db.session.commit()
     return object_type.query.filter_by(forge_id=object_data['forge_id']).first()
 
 
